@@ -1,0 +1,12 @@
+# Core AI & Voice
+google-genai==1.67.0
+elevenlabs==1.5.0
+
+# Critical Plumbing (The versions that usually clash)
+anyio>=4.8.0
+pydantic>=2.10.0
+httpx>=0.28.0
+
+# Optional but recommended for your "Ethos" features
+numpy>=2.2.0  # Only if you're doing image/data processing
+python-dotenv # To hide your API keys (Highly Recommended)
