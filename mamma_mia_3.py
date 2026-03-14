@@ -48,7 +48,7 @@ if st.button("MAKE THE CHEF SPEAK"):
         with st.spinner("The Chef is thinking... and he's not happy..."):
             # A. Generate Text
             response = gen_client.models.generate_content(
-                model="gemini-2.5-flash", 
+                model="gemini-1.5-flash", 
                 contents=prompt
             )
             chef_text = response.text

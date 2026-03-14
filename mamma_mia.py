@@ -40,9 +40,10 @@ def get_recipe_with_retry(ingredients):
             raise e # If it's a different error, let it crash so we can see why
 
 # --- RUN TEST ---
+if __name__ == "__main__":
 ingredients = "A single egg, some flour, and a dream."
-result = get_recipe(ingredients)
-print(result)
+chef_response = get_recipe_with_retry(ingredients)
+print(chef_response)
 
 # To hear it (uncomment the lines below once you pick a voice):
 # audio = voice_client.generate(text=result, voice="Giovanni", model="eleven_multilingual_v2")
