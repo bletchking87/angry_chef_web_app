@@ -57,7 +57,7 @@ if st.button("MAKE THE CHEF SPEAK"):
             # B. Generate Audio (Using a stable Giovanni/Antoni ID)
             audio = eleven_client.generate(
                 text=chef_text,
-                voice="zcAOhNBS3c14rBihAFp1", # Giovanni
+                voice="s2wvuS7SwITYg8dqsJdn", # Giovanni
                 model="eleven_multilingual_v2"
             )
             st.audio(bytes(audio), format="audio/mp3")
