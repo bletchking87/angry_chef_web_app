@@ -60,8 +60,7 @@ if st.button("MAKE THE CHEF SPEAK"):
                 voice="zcAOhNBS3c14rBihAFp1", # Giovanni
                 model="eleven_multilingual_v2"
             )
-            st.audio(audio, format="audio/mp3")google.genai.errors.ClientError: This app has encountered an error. The original error message is redacted to prevent data leaks. Full error details have been recorded in the logs (if you're on Streamlit Cloud, click on 'Manage app' in the lower right of your app).
-Traceback:
+            st.audio(audio, format="audio/mp3")
 File "/mount/src/angry_chef_web_app/mamma_mia_3.py", line 50, in <module>
     response = gen_client.models.generate_content(
                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
