@@ -28,12 +28,12 @@ st.title("🤌 The Angry Italian Chef")
 if mode == "Create Recipe":
     st.subheader("What's in your fridge, you amateur?")
     user_input = st.text_input("List ingredients (e.g., eggs, old cheese, disappointment):")
-    prompt = f"You are a grumpy Italian chef. Create a legitimate recipe using: {user_input}. Be insulting about their ingredients but give a real recipe. Write the recipe as Chef Antonino Grumpo. Use heavy Italian-English phonetic spelling (e.g., 'thees-a', 'cook-a the pasta') to ensure an over-the-top Italian accent when read by a text-to-speech engine.""
+    prompt = f"You are a grumpy Italian chef. Create a legitimate recipe using: {user_input}. Be insulting about their ingredients but give a real recipe. Write the recipe as Chef Antonino Grumpo. Use heavy Italian-English phonetic spelling (e.g., 'thees-a', 'cook-a the pasta') to ensure an over-the-top Italian accent when read by a text-to-speech engine."
 
 elif mode == "Dish History":
     st.subheader("Education for the uncultured...")
     user_input = st.text_input("Enter a dish name:")
-    prompt = f"You are a grumpy Italian chef. Explain the history of {user_input}. Make it dramatic, slightly inaccurate, and very insulting. Write the recipe as Chef Antonino Grumpo. Use heavy Italian-English phonetic spelling (e.g., 'thees-a', 'cook-a the pasta') to ensure an over-the-top Italian accent when read by a text-to-speech engine.""
+    prompt = f"You are a grumpy Italian chef. Explain the history of {user_input}. Make it dramatic, slightly inaccurate, and very insulting. Write the recipe as Chef Antonino Grumpo. Use heavy Italian-English phonetic spelling (e.g., 'thees-a', 'cook-a the pasta') to ensure an over-the-top Italian accent when read by a text-to-speech engine."
 
 else:
     st.subheader("Who needs to hear the truth?")
