@@ -2,6 +2,8 @@ import streamlit as st
 import os
 from google import genai
 from elevenlabs.client import ElevenLabs
+import httpx 
+
 
 # 1. Access Secrets
 GEMINI_KEY = st.secrets.get("GEMINI_API_KEY")
@@ -13,9 +15,11 @@ if not GEMINI_KEY or not ELEVEN_KEY:
 
 # Initialize Clients
 gen_client = genai.Client(api_key=GEMINI_KEY)
-eleven_client = ElevenLabs(api_key=ELEVEN_KEY)
+eleven_client = ElevenLabs(api_key=ELEVEN_KEY,
+    httpx_client=httpx.Client(timeout=120.0) # Gives the Chef 2 minutes to talk
+)
 
-# --- 2. INITIALIZE HISTORY (LEVEL 1) ---
+# --- 2. INITIALIZE HISTORY ---
 if "chef_history" not in st.session_state:
     st.session_state.chef_history = []
 
@@ -42,7 +46,7 @@ with st.form("chef_form"):
     if mode == "Create Recipe":
         st.subheader("What's in your fridge, you amateur?")
         user_input = st.text_input("List ingredients:")
-        prompt_text = f"You are a grumpy Italian chef. Create a legitimate recipe using: {user_input}. Be insulting but give a real recipe. Use heavy phonetic Italian-English (e.g., 'thees-a', 'pasta-a')."
+        prompt_text = f"You are a grumpy Italian chef named Vinz, (or Enzo). Create a legitimate recipe using: {user_input}. Be insulting but give a real recipe. Use heavy phonetic Italian-English (e.g., 'thees-a', 'pasta-a'). Maximum 150 words."
 
     elif mode == "Dish History":
         st.subheader("Education for the uncultured...")
@@ -62,28 +66,34 @@ if submitted:
     if not user_input:
         st.warning("Input something first, you donkey!")
     else:
-        with st.spinner("The Chef is thinking... and he's not happy..."):
+        with st.spinner("The Chef is screaming into the microphone..."):
             try:
-                # A. Generate Text
+                # A. Generate Text (Gemini)
+                # Using 1.5-flash as it's the current stable version
                 response = gen_client.models.generate_content(
-                    model="gemini-2.5-flash", 
-                    contents=prompt_text
+                    model="gemini-1.5-flash", 
+                    contents=prompt_text + " Keep it brief, under 150 words!"
                 )
                 chef_text = response.text
                 st.write(chef_text)
 
-                # B. Generate Audio
-                audio = eleven_client.generate(
+                # B. Generate Audio (ElevenLabs)
+                # Using turbo for speed to prevent Streamlit timeouts
+                audio_stream = eleven_client.generate(
                     text=chef_text,
                     voice="s2wvuS7SwITYg8dqsJdn", 
-                    model="eleven_multilingual_v2"
+                    model="eleven_turbo_v2_5" 
                 )
                 
-                # Convert generator to bytes for st.audio
-                audio_data = b"".join(list(audio))
-                st.audio(audio_data, format="audio/mp3")
+                # THE FIX: Convert the stream into solid data
+                audio_data = b"".join(list(audio_stream))
+                
+                if audio_data:
+                    st.audio(audio_data, format="audio/mp3")
+                else:
+                    st.error("The Chef's voice was lost! Check your ElevenLabs dashboard.")
 
-                # C. Save to History
+                # C. Save to History (Level 1 Memory)
                 st.session_state.chef_history.append({
                     "mode": mode,
                     "input": user_input,
