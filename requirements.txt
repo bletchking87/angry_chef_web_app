@@ -6,6 +6,7 @@ elevenlabs==1.5.0
 anyio>=4.8.0
 pydantic>=2.10.0
 httpx>=0.28.0
+streamlit
 
 # Optional but recommended for your "Ethos" features
 numpy>=2.2.0  # Only if you're doing image/data processing

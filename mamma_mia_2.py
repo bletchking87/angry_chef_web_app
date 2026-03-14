@@ -3,10 +3,32 @@ import time
 from dotenv import load_dotenv
 from google import genai
 import google.genai.errors as errors
+import streamlit as st
 
 # ElevenLabs imports
 from elevenlabs.client import ElevenLabs 
 from elevenlabs import play, VoiceSettings
+
+
+# 1. Access the secret using Streamlit's native tool
+gemini_key = st.secrets.get("GEMINI_API_KEY")
+
+# 2. Add a 'Bouncer' to prevent the blank screen
+if not gemini_key:
+    st.error("Mama mia! The Chef can't find his GEMINI_API_KEY in the Streamlit Secrets.")
+    st.stop() # This stops the app here so it doesn't crash silently
+
+# 3. Initialize the client with the verified key
+client = genai.Client(api_key=gemini_key)
+
+st.title("👨‍🍳 The Angry Chef")
+# ... the rest of your app code
+# TEST LINE: If you see this on the web, Streamlit is working!
+st.write("The Chef is in the kitchen...") 
+
+# Check if keys are actually loading
+if "GEMINI_API_KEY" not in os.environ:
+    st.error("I can't find the Gemini Key in the environment!")
 
 # 1. INITIALIZATION
 load_dotenv()
