@@ -69,9 +69,9 @@ if submitted:
         with st.spinner("The Chef is screaming into the microphone..."):
             try:
                 # A. Generate Text (Gemini)
-                # Using 1.5-flash as it's the current stable version
+               
                 response = gen_client.models.generate_content(
-                    model="gemini-1.5-flash", 
+                    model="gemini-2.5-flash", 
                     contents=prompt_text + " Keep it brief, under 150 words!"
                 )
                 chef_text = response.text
