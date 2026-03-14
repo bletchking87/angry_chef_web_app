@@ -60,4 +60,4 @@ if st.button("MAKE THE CHEF SPEAK"):
                 voice="zcAOhNBS3c14rBihAFp1", # Giovanni
                 model="eleven_multilingual_v2"
             )
-            st.audio(audio, format="audio/mp3")
+            st.audio(bytes(audio), format="audio/mp3")
