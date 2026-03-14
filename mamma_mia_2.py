@@ -58,7 +58,7 @@ def speak_recipe(text):
     
     audio = voice_client.generate(
         text=text,
-        voice="erXw75R1qfC0zBqpsYq0", 
+        voice="pNInz6obpgnuMscplWBy", 
         model="eleven_multilingual_v2",
         voice_settings=VoiceSettings(
             stability=0.30,        # Very low = very emotional
