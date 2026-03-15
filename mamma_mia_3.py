@@ -23,21 +23,36 @@ eleven_client = ElevenLabs(api_key=ELEVEN_KEY,
 if "chef_history" not in st.session_state:
     st.session_state.chef_history = []
 
-# --- 3. SIDEBAR CONFIGURATION ---
-st.sidebar.title("👨‍🍳 Chef's Control Panel")
-mode = st.sidebar.radio(
-    "Select Task:",
-    ["Create Recipe", "Dish History", "Just Insult Me"]
-)
 
-# Show history in the sidebar
+# --- 3. SIDEBAR CONFIGURATION ---
 with st.sidebar:
+    st.title("👨‍🍳 Chef's Control Panel")
+    
+    # DIAGNOSTICS
+    st.markdown("### 📊 System Diagnostics")
+    st.caption("Infrastructure: High Availability")
+    
+    if st.session_state.chef_history:
+        total_chars = sum(len(h['recipe']) for h in st.session_state.chef_history)
+        # Metrics look great in the sidebar
+        st.metric("Chars Synthesized", f"{total_chars:,}")
+    
     st.markdown("---")
+    
+    # INPUT CONTROLS
+    mode = st.radio(
+        "Select Task:",
+        ["Create Recipe", "Dish History", "Just Insult Me"]
+    )
+    
+    st.markdown("---")
+    
+    # HISTORY AT THE BOTTOM (It can grow indefinitely)
     st.subheader("📜 Past Insults")
     for entry in reversed(st.session_state.chef_history):
+        # The expander keeps the sidebar from becoming a mile long
         with st.expander(f"{entry['mode']}: {entry['input'][:15]}..."):
             st.write(entry['recipe'])
-
 # --- 4. MAIN UI LOGIC ---
 st.title("🤌 The Angry Italian Chef")
 
