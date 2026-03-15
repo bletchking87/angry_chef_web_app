@@ -46,7 +46,18 @@ with st.form("chef_form"):
     if mode == "Create Recipe":
         st.subheader("What's in your fridge, you amateur?")
         user_input = st.text_input("List ingredients:")
-        prompt_text = f"You are a grumpy Italian chef named Vinz, (or Enzo). Create a legitimate recipe using: {user_input}. Be insulting but give a real recipe. Use heavy phonetic Italian-English (e.g., 'thees-a', 'pasta-a'). Maximum 150 words."
+        # Updated prompt strategy
+        accent_instructions = (
+    "RULES FOR ACCENT: "
+    "1. Only add an 'a' at the end of words ending in a hard consonant if t(e.g., 'cook-a the meat-a' BUT 'pot of water', 'pasta and-a cheese-a). "
+    "2. NEVER add vowels inside a word or between two vowels. "
+    "3. Keep 70 percent of the words in standard English so it remains readable. "
+    "4. Use 'thees-a' for 'this' and 'ees-a' for 'is'—but do not overdo it."
+)
+        prompt_text = f"Role: Grumpy Italian Chef. Task: {user_input}. {accent_instructions}"
+        
+        
+       
 
     elif mode == "Dish History":
         st.subheader("Education for the uncultured...")
