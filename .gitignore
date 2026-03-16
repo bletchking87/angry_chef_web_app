@@ -4,3 +4,4 @@ __pycache__/
 *.mp3
 .devcontainer/
 *.log
+chef-key.json

@@ -3,6 +3,7 @@ import os
 from google import genai
 from elevenlabs.client import ElevenLabs
 import httpx 
+import datetime
 
 
 # 1. Access Secrets
@@ -56,39 +57,43 @@ with st.sidebar:
 # --- 4. MAIN UI LOGIC ---
 st.title("🤌 The Angry Italian Chef")
 
+# --- GLOBAL PERSONA CONSTRAINTS ---
+accent_instructions = (
+    "ACT AS A GRUMPY ITALIAN CHEF. "
+    "PHONETIC RULES: 1. Add an 'a' only at the end of words ending in a hard consonant (cook-a, meat-a). "
+    "2. Never add vowels between consonants inside a word. "
+    "3. Keep 70% of the words standard English for clarity. "
+    "4. Be rude, impatient, and judgmental."
+)
+
+
+
 # Wrap EVERYTHING in a form so "Enter" triggers the button
 with st.form("chef_form"):
     if mode == "Create Recipe":
         st.subheader("What's in your fridge, you amateur?")
         user_input = st.text_input("List ingredients:")
         # Updated prompt strategy
-        accent_instructions = (
-    "RULES FOR ACCENT: "
-    "1. Only add an 'a' at the end of words ending in a hard consonant if t(e.g., 'cook-a the meat-a' BUT 'pot of water', 'pasta and-a cheese-a). "
-    "2. NEVER add vowels inside a word or between two vowels. "
-    "3. Keep 70 percent of the words in standard English so it remains readable. "
-    "4. Use 'thees-a' for 'this' and 'ees-a' for 'is'—but do not overdo it."
-)
         prompt_text = f"Role: Grumpy Italian Chef. Task: {user_input}. {accent_instructions}"
         
-        
-       
-
     elif mode == "Dish History":
         st.subheader("Education for the uncultured...")
         user_input = st.text_input("Enter a dish name:")
-        prompt_text = f"Explain the history of {user_input} as a grumpy Italian chef. Be dramatic and insulting. Use heavy phonetic Italian-English."
+        prompt_text = f"Explain the history of {user_input} as a grumpy Italian chef. {accent_instructions}."
 
     else:
         st.subheader("Who needs to hear the truth?")
         user_input = st.text_input("Target name:")
-        prompt_text = f"Give a ridiculous, accented Italian insult to {user_input}."
+        prompt_text = f"Give a ridiculous, accented Italian insult to {user_input}. {accent_instructions}"
 
     # The Submit Button
     submitted = st.form_submit_button("MAKE THE CHEF SPEAK")
 
 # --- 5. EXECUTION ---
+
 if submitted:
+    # Inside your 'if submitted' block:
+    full_prompt = f"{accent_instructions}\n\nUSER TASK: {user_input}\nMODE: {mode}"
     if not user_input:
         st.warning("Input something first, you donkey!")
     else:
