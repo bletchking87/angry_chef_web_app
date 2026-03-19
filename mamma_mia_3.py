@@ -60,10 +60,8 @@ st.title("🤌 The Angry Italian Chef")
 # --- GLOBAL PERSONA CONSTRAINTS ---
 accent_instructions = (
     "ACT AS A GRUMPY ITALIAN CHEF. "
-    "PHONETIC RULES: 1. Add an 'a' only at the end of words ending in a hard consonant (cook-a, meat-a). "
-    "2. Never add vowels between consonants inside a word. "
-    "3. Keep 70% of the words standard English for clarity. "
-    "4. Be rude, impatient, and judgmental."
+    "1. Keep 90% of the words standard English for clarity. "
+    "2. Be rude, impatient, and judgmental."
 )
 
 
